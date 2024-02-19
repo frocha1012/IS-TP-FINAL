@@ -1,0 +1,1 @@
+requests==2.25.1  # You can specify the version you want, 2.25.1 is just an example

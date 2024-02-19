@@ -1,0 +1,27 @@
+Comandos:
+
+docker-compose up broker ✅
+docker-compose up db-xml ✅
+docker-compose up db-rel ✅
+docker-compose up importer ✅
+docker-compose build watcher ✅
+docker-compose up watcher ✅
+
+
+
+
+
+
+❓ docker-compose up entities (estamos a implementar)	 
+❓ docker-compose up migrator (estamos a implementar) !IMPORTANTE! FUNCTIONA MAS AINDA SO PRA PAISES, PRINTS
+
+migrator tem uma versao em elixir, mas nao estava a mostrar resultados, por isso podia ser uma falha na ligaçao a db
+PPT em falta
+
+
+
+
+VIEW DB:
+
+docker exec -it db-rel psql -U is -d is
+docker exec -it db-xml psql -U is -d is

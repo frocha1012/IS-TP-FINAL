@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model countries {
+  id        String   @id @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  name      String   @db.VarChar(250)
+  geom      Unsupported("geometry")?   
+  created_on DateTime @default(now()) 
+  updated_on DateTime @default(now()) @updatedAt
+  orders    orders[]
+}
+
+
+model orders {
+  id          String    @id @default(uuid())
+  invoice_no   String?   // Assuming nullable, change if required
+  invoice_date DateTime  // Assuming TIMESTAMP without timezone, adjust if needed
+  customer_id  Int
+  country_ref  String
+  country     countries  @relation(fields: [country_ref], references: [id])
+  orderproducts orderproducts[]
+}
+
+model products {
+  id          String    @id @default(uuid())
+  stock_code   String    @unique
+  description String
+  unit_price   Float     // Assuming NUMERIC can be represented as Float
+  orderproducts orderproducts[]
+}
+
+model orderproducts {
+  id        String  @id @default(uuid())
+  orderId   String
+  productId String
+  orders    orders   @relation(fields: [orderId], references: [id])
+  products  products @relation(fields: [productId], references: [id])
+
+  @@unique([orderId, productId])
+}
+
+
+
+
